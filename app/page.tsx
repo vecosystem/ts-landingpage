@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Card, CardContent } from "@/components/ui/card"
 import { Search, BookOpen, Target, Instagram } from "lucide-react"
 import Image from "next/image"
@@ -272,9 +272,12 @@ export default function VecoLanding() {
 
       {/* Registration Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md" aria-describedby="dialog-description">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-[#132650] text-center">🎯 출시 알림 받기</DialogTitle>
+            <DialogDescription id="dialog-description" className="text-center text-gray-600">
+              출시 알림을 받으시려면 아래 정보를 입력해주세요.
+            </DialogDescription>
           </DialogHeader>
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="space-y-4">
