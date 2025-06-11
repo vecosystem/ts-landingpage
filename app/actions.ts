@@ -21,13 +21,16 @@ export async function submitToNotion(formData: FormData) {
       throw new Error('이름과 이메일은 필수 입력 항목입니다.');
     }
 
+    console.log('Attempting to create page in Notion database...');
+    console.log('Database ID:', '20d2d37cca118045b258c869bcad4f81');
+    
     const response = await notion.pages.create({
       parent: {
         type: 'database_id',
-        database_id: '20d2d37cca11808b94e5ff4d79a2eb49',
+        database_id: '20d2d37cca118045b258c869bcad4f81',
       },
       properties: {
-        Name: {
+        이름: {
           title: [
             {
               text: {
@@ -36,15 +39,21 @@ export async function submitToNotion(formData: FormData) {
             },
           ],
         },
-        Email: {
+        이메일: {
           email: email,
         },
       },
     });
 
+    console.log('Successfully created page:', response);
     return { success: true, data: response };
-  } catch (error) {
-    console.error('Error adding user to Notion:', error);
+  } catch (error: any) {
+    console.error('Detailed error information:', {
+      message: error?.message,
+      code: error?.code,
+      status: error?.status,
+      body: error?.body
+    });
     return { success: false, error };
   }
 } 
