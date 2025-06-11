@@ -22,12 +22,12 @@ export async function submitToNotion(formData: FormData) {
     }
 
     console.log('Attempting to create page in Notion database...');
-    console.log('Database ID:', '20d2d37cca118045b258c869bcad4f81');
+    console.log('Database ID:', process.env.NOTION_DATABASE_ID);
     
     const response = await notion.pages.create({
       parent: {
         type: 'database_id',
-        database_id: '20d2d37cca118045b258c869bcad4f81',
+        database_id: process.env.NOTION_DATABASE_ID || '',
       },
       properties: {
         이름: {
