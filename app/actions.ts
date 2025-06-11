@@ -30,8 +30,20 @@ export async function submitToNotion(formData: FormData) {
       return { success: false, error: '이름과 이메일은 필수 입력 항목입니다.' };
     }
 
-    console.log('Attempting to create page in Notion database...');
-    console.log('Database ID:', notionDatabaseId);
+    // 입력값 검증
+    if (name.length < 2) {
+      return { success: false, error: '이름은 2글자 이상이어야 합니다.' };
+    }
+
+    if (!email.includes('@')) {
+      return { success: false, error: '유효한 이메일 주소를 입력해주세요.' };
+    }
+
+    console.log('Attempting to create page in Notion database...', {
+      databaseId: notionDatabaseId,
+      name,
+      email
+    });
     
     const response = await notion.pages.create({
       parent: {
@@ -54,15 +66,29 @@ export async function submitToNotion(formData: FormData) {
       },
     });
 
-    console.log('Successfully created page:', response);
+    console.log('Successfully created page:', {
+      id: response.id,
+      object: response.object
+    });
+    
     return { success: true, data: response };
   } catch (error: any) {
     console.error('Detailed error information:', {
       message: error?.message,
       code: error?.code,
       status: error?.status,
-      body: error?.body
+      body: error?.body,
+      stack: error?.stack
     });
+    
+    // Notion API 관련 에러 메시지 처리
+    if (error?.code === 'unauthorized') {
+      return { success: false, error: 'Notion API 인증에 실패했습니다.' };
+    }
+    
+    if (error?.code === 'object_not_found') {
+      return { success: false, error: 'Notion 데이터베이스를 찾을 수 없습니다.' };
+    }
     
     // 사용자 친화적인 에러 메시지 반환
     const errorMessage = error?.message || '알 수 없는 오류가 발생했습니다.';
