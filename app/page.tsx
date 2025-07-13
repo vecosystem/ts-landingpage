@@ -60,7 +60,7 @@ export default function VecoLanding() {
             onClick={() => setIsModalOpen(true)}
             className="bg-[#132650] hover:bg-[#2E4475] text-white px-8 py-4 text-lg rounded-lg font-semibold"
           >
-            사전 등록하고 가장 먼저 만나보기
+            사전 등록하고 체험하기
           </Button>
         </div>
       </section>
@@ -299,6 +299,9 @@ export default function VecoLanding() {
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <Button type="submit" className="w-full bg-[#132650] hover:bg-[#2E4475] text-white py-3">
                 등록하기
+              </Button>
+              <Button type="button" className="w-full bg-white border border-[#132650] text-[#132650] py-3 mt-2 font-semibold">
+                체험하러 가기
               </Button>
             </form>
           ) : (
