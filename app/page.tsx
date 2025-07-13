@@ -30,11 +30,7 @@ export default function VecoLanding() {
       
       if (result.success) {
         setIsSubmitted(true)
-        setTimeout(() => {
-          setIsModalOpen(false)
-          setIsSubmitted(false)
-          setFormData({ name: "", email: "" })
-        }, 2000)
+        // setTimeout 제거: 모달 자동 닫힘 방지
       } else {
         setError('제출 중 오류가 발생했습니다.')
       }
@@ -300,9 +296,6 @@ export default function VecoLanding() {
               <Button type="submit" className="w-full bg-[#132650] hover:bg-[#2E4475] text-white py-3">
                 등록하기
               </Button>
-              <Button type="button" className="w-full bg-white border border-[#132650] text-[#132650] py-3 mt-2 font-semibold">
-                체험하러 가기
-              </Button>
             </form>
           ) : (
             <div className="text-center py-8">
@@ -311,6 +304,9 @@ export default function VecoLanding() {
                 <br />
                 출시되면 가장 먼저 알려드릴게요.
               </p>
+              <Button type="button" className="w-full bg-white border border-[#132650] text-[#132650] py-3 mt-6 font-semibold">
+                체험하러 가기
+              </Button>
             </div>
           )}
         </DialogContent>
